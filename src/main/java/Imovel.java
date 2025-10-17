@@ -50,15 +50,20 @@ public abstract class Imovel {
         this.valorAluguel = valorAluguel;
     }
 
-
     public abstract String estaAlugado();
-        return "Proprietario: " + proprietario.getNome() +
-                " | telefone: " + proprietario.getTelefone();
-
-
 
     public int calcularAluguel(int meses) {
         return(int) (valorAluguel * meses);
+    }
+
+    public String contatoProprietario() {
+        if (proprietario != null) {
+            return "Proprietário: " + proprietario.getNome() +
+                    " | Telefone: " + proprietario.getTelefone() +
+                    " | CPF: " + proprietario.getCpf();
+        } else {
+            return "Sem proprietário cadastrado";
+        }
     }
 
 

@@ -1,8 +1,8 @@
 public class Proprietario {
 
-    private String nome;
-    private String telefone;
-    private String cpf;
+    private final String nome;
+    private final String telefone;
+    private final String cpf;
 
     public Proprietario(String nome, String telefone, String cpf) {
         this.nome = nome;
@@ -10,7 +10,7 @@ public class Proprietario {
         this.cpf = cpf;
     }
 
-    public String getNome() {
+    public  String getNome() {
         return nome;
     }
 
@@ -23,6 +23,8 @@ public class Proprietario {
     }
 
     public String exibirInfo() {
-        return "Proprietario: " + nome + " | Telefone: " + telefone + " | CPF: " + cpf;
+        return "Proprietario: " + nome +
+                " | Telefone: " + telefone +
+                " | CPF: " + cpf;
     }
 }

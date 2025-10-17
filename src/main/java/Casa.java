@@ -2,8 +2,8 @@ public class Casa extends Imovel {
 
     private boolean possuiQuintal;
 
-    public Casa(String endereco, double valorAluguel, Proprietario proprietario, boolean possuiQuintal) {
-        super(endereco, proprietario, valorAluguel);
+    public Casa(String endereco, int numero, Proprietario proprietario, double valorAluguel, boolean possuiQuintal) {
+        super(endereco, numero, proprietario, valorAluguel);
         this.possuiQuintal = possuiQuintal;
     }
 
