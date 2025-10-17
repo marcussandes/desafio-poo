@@ -39,7 +39,7 @@ public class Application {
         System.out.print("Endereço: ");
         String endereco = sc.nextLine();
 
-        System.out.println("Numero: ");
+        System.out.print("Numero: ");
         int numero = sc.nextInt();
         sc.nextLine();
 
@@ -56,9 +56,28 @@ public class Application {
         System.out.print("CPF: ");
         String cpf = sc.nextLine();
 
+        boolean possuiQuintal = false;
+        boolean entradaValida = false;
+
+        while (!entradaValida) {
+            System.out.println("Possui quintal? (Sim/Não): ");
+            String resposta = sc.nextLine().trim();
+
+            if (resposta.equalsIgnoreCase("Sim")) {
+                possuiQuintal = true;
+                entradaValida = true;
+            } else if (resposta.equalsIgnoreCase("Não") || resposta.equalsIgnoreCase("Nao")) {
+                possuiQuintal = false;
+                entradaValida = true;
+            } else {
+                System.out.println("Opção inválida. Por favor, digite 'Sim' ou 'Não'.");
+            }
+
+        }
+
         Proprietario proprietario = new Proprietario(nome, telefone, cpf);
 
-        Casa novaCasa = new Casa(endereco, numero,  proprietario, valor, false);
+        Casa novaCasa = new Casa(endereco, numero,  proprietario, valor, possuiQuintal);
         imoveis.add(novaCasa);
 
         System.out.println("Casa cadastrada com sucesso!");
@@ -88,7 +107,7 @@ public class Application {
         System.out.println("Andar: ");
         int andar = sc.nextInt();
 
-        System.out.println("Possui garagem? (true/false): ");
+        System.out.println("Possui garagem? (Sim/Não): ");
         boolean garagem = sc.nextBoolean();
 
         Proprietario proprietario = new Proprietario(nome, telefone, cpf);
@@ -108,9 +127,13 @@ public class Application {
             return;
         }
 
-        for (Imovel imovel : imoveis) {
+        for (int i = 0; i < imoveis.size(); i++) {
+            Imovel imovel = imoveis.get(i);
+
+            System.out.println("=================================");
+            System.out.println("|| ÍNDICE DO IMÓVEL: [" + i + "] ||");
+            System.out.println("=================================");
             imovel.exibirInformacoes();
-            System.out.println("------------------------");
         }
     }
 
@@ -140,7 +163,7 @@ public class Application {
             System.out.println("Informe o periodo (em meses) para o calculo do aluguel: ");
             int meses = sc.nextInt();
 
-            System.out.println("Valor total do aluguel" + imovel.calcularAluguel(meses));
+            System.out.println("Valor total do aluguel R$ " + imovel.calcularAluguel(meses));
 
         } else {
             System.out.println("Indice inválido!");

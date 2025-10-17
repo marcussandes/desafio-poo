@@ -44,6 +44,21 @@ public class Apartamento extends Imovel {
         }
     }
 
+    @Override
+    public double calcularAluguel(int meses) {
+        double valorBase = super.calcularAluguel(meses);
+        double desconto = 0.0;
+
+        if (meses > 12) {
+            desconto = valorBase * 0.10;
+            System.out.println("(Aplicado desconto de 10% para aluguel acima de 12 meses)");
+            double descontoMes = (valorBase - desconto) / meses;
+            System.out.println("Por mês o valor sai: R$ " + descontoMes);
+        }
+        return valorBase - desconto;
+    }
+
+
     public void exibirInformacoes() {
         System.out.println("===== APARTAMENTO =====");
         System.out.println("Endereço: " + getEndereco());

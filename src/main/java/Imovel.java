@@ -52,7 +52,7 @@ public abstract class Imovel {
 
     public abstract String estaAlugado();
 
-    public int calcularAluguel(int meses) {
+    public double calcularAluguel(int meses) {
         return(int) (valorAluguel * meses);
     }
 
