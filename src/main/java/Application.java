@@ -87,8 +87,12 @@ public class Application {
         System.out.print("Endereço: ");
         String endereco = sc.nextLine();
 
-        System.out.println("Numero do apartamento: ");
+        System.out.print("Numero do apartamento: ");
         int numeroApartamento = sc.nextInt();
+
+        System.out.print("Andar: ");
+        int andar = sc.nextInt();
+        sc.nextLine();
 
         System.out.print("Valor do aluguel: ");
         double valorAluguel = sc.nextDouble();
@@ -104,17 +108,31 @@ public class Application {
         String cpf = sc.nextLine();
 
 
-        System.out.println("Andar: ");
-        int andar = sc.nextInt();
 
-        System.out.println("Possui garagem? (Sim/Não): ");
-        boolean garagem = sc.nextBoolean();
+        boolean possuiGaragem = false;
+        boolean entradaValida = false;
+
+
+        while (!entradaValida) {
+            System.out.print("Possui garagem? (Sim/Não): ");
+            String resposta = sc.nextLine().trim();
+
+            if (resposta.equalsIgnoreCase("Sim")) {
+                possuiGaragem = true;
+                entradaValida = true;
+            } else if (resposta.equalsIgnoreCase("Não") || resposta.equalsIgnoreCase("Nao")) {
+                possuiGaragem = false;
+                entradaValida = true;
+            } else {
+                System.out.println("Opção inválida. Por favor, digite 'Sim' ou 'Não'.");
+            }
+        }
 
         Proprietario proprietario = new Proprietario(nome, telefone, cpf);
 
 
 
-        Apartamento ap = new Apartamento(endereco, numeroApartamento, proprietario, valorAluguel, numeroApartamento, andar, garagem);
+        Apartamento ap = new Apartamento(endereco, numeroApartamento, proprietario, valorAluguel, numeroApartamento, andar, possuiGaragem);
         imoveis.add(ap);
 
         System.out.println("Apartamento cadastrado com sucesso!");
@@ -140,14 +158,35 @@ public class Application {
     private static void alterarStatusAluguel() {
         listarImoveis();
 
-        System.out.println("Informe o indice do imovel - começando em 0: ");
+        System.out.println("Informe o indice do imovel para alterar o status - começando em 0: ");
         int indice = sc.nextInt();
+        sc.nextLine();
 
         if (indice >= 0 && indice < imoveis.size()) {
             Imovel imovel = imoveis.get(indice);
-            imovel.setAlugado(!imovel.isAlugado());
-            System.out.println("Status do imovel  atualizado!");
-        } else {
+            if (imovel.isAlugado()) {
+                imovel.setAlugado(false);
+                imovel.setInquilino(null);
+                System.out.println("Imóvel desocupado e disponivel para aluguel.");
+            } else {
+                System.out.println("\n--- Dados do novo inquilino ---");
+                System.out.print("Nome do inquilino: ");
+                String nomeInquilino = sc.nextLine();
+
+                System.out.print("Telefone do inquilino: ");
+                String tellInquilino = sc.nextLine();
+
+                System.out.print("CPF do inquilino: ");
+                String cpfInquilino = sc.nextLine();
+
+                Inquilino novoInquilino = new Inquilino(nomeInquilino, tellInquilino, cpfInquilino);
+
+                imovel.setInquilino(novoInquilino);
+                imovel.setAlugado(true);
+
+                System.out.println("Imovel alugado com sucesso para " + nomeInquilino + ".");
+            }
+    } else {
             System.out.println("Indice inválido!");
         }
     }

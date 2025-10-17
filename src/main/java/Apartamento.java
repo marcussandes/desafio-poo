@@ -67,6 +67,15 @@ public class Apartamento extends Imovel {
         System.out.println("Valor do aluguel: R$ " + getValorAluguel());
         System.out.println("Possui garagem: " + (possuiGaragem ? "Sim" : "Não"));
         System.out.println(contatoProprietario());
-        System.out.println(estaAlugado());
+
+        if (this.isAlugado()) {
+            Inquilino inquilino = this.getInquilino();
+            if (inquilino != null) {
+                System.out.println("_____________________________");
+                System.out.println("ALUGADO PARA: " + inquilino.exibirInfo());
+                System.out.println("_____________________________");
+            }
+        }
+
     }
 }

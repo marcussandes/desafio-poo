@@ -18,9 +18,9 @@ public class Casa extends Imovel {
     @Override
     public String estaAlugado() {
         if (isAlugado()) {
-            return "A casa localizada em " + getEndereco() + " está alugada.";
+            return "A casa localizada em " + getEndereco() + " || está alugada. ||";
         } else {
-            return " A casa localizada em " + getEndereco() + " está disponivel para aluguel.";
+            return " A casa localizada em " + getEndereco() + " || está disponivel para aluguel. ||";
         }
     }
 
@@ -44,9 +44,17 @@ public class Casa extends Imovel {
         System.out.println("Endereço: " + getEndereco());
         System.out.println("Valor do aluguel: R$ " + getValorAluguel());
         System.out.println("Possui quintal: " + (possuiQuintal ? "Sim" : "Não"));
-        System.out.println(getProprietario().exibirInfo());
-        System.out.println(estaAlugado());
-        System.out.println();
+        System.out.println("Proprietario: " + getProprietario().exibirInfo());
+
+        if (this.isAlugado()) {
+            Inquilino inquilino = this.getInquilino();
+            if (inquilino != null) {
+                System.out.println("_____________________________");
+                System.out.println("ALUGADO PARA: " + inquilino.exibirInfo());
+                System.out.println("_____________________________");
+            }
+        }
+
     }
 
 }
