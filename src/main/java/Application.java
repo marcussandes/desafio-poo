@@ -1,0 +1,167 @@
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Application {
+    private static ArrayList<Imovel> imoveis = new ArrayList<>();
+    private static Scanner sc = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        int opcao;
+
+        do {
+            System.out.println("\n===== SISTEMA DE CORRETORA IMOBILIARIA MS =====");
+            System.out.println("1 - Cadastrar Casa");
+            System.out.println("2 - Cadastrar Apartamento");
+            System.out.println("3 - Listar Imóveis");
+            System.out.println("4 - Alugar/Disponibilizar Imóvel");
+            System.out.println("5 - Calcular valor total do aluguel");
+            System.out.println("6 - Remover Imóvel");
+            System.out.println("0 - Sair");
+            System.out.println("Escolha uma opção");
+            opcao = sc.nextInt();
+            sc.nextLine();
+
+            switch (opcao) {
+                case 1 -> cadastrarCasa();
+                case 2 -> cadastrarApartamento();
+                case 3 -> listarImoveis();
+                case 4 -> alterarStatusAluguel();
+                case 5 -> calcularValorAluguel();
+                case 6 -> removerAluguel();
+                case 0 -> System.out.println("Encerrando o sistema!");
+                default -> System.out.println("Opção inválida! Tente novamente, por favor.");
+            }
+
+        } while (opcao != 0);
+    }
+
+    private static void cadastrarCasa() {
+        System.out.print("Endereço: ");
+        String endereco = sc.nextLine();
+
+        System.out.println("Numero: ");
+        int numero = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Valor do aluguel: ");
+        double valor = sc.nextDouble();
+        sc.nextLine();
+
+        System.out.print("Nome do proprietário: ");
+        String nome = sc.nextLine();
+
+        System.out.print("Telefone: ");
+        String telefone = sc.nextLine();
+
+        System.out.print("CPF: ");
+        String cpf = sc.nextLine();
+
+        Proprietario proprietario = new Proprietario(nome, telefone, cpf);
+
+        Casa novaCasa = new Casa(endereco, numero,  proprietario, valor, false);
+        imoveis.add(novaCasa);
+
+        System.out.println("Casa cadastrada com sucesso!");
+    }
+
+    private static void cadastrarApartamento() {
+        System.out.print("Endereço: ");
+        String endereco = sc.nextLine();
+
+        System.out.println("Numero do apartamento: ");
+        int numeroApartamento = sc.nextInt();
+
+        System.out.print("Valor do aluguel: ");
+        double valorAluguel = sc.nextDouble();
+        sc.nextLine();
+
+        System.out.print("Nome do proprietário: ");
+        String nome = sc.nextLine();
+
+        System.out.print("Telefone: ");
+        String telefone = sc.nextLine();
+
+        System.out.print("CPF: ");
+        String cpf = sc.nextLine();
+
+
+        System.out.println("Andar: ");
+        int andar = sc.nextInt();
+
+        System.out.println("Possui garagem? (true/false): ");
+        boolean garagem = sc.nextBoolean();
+
+        Proprietario proprietario = new Proprietario(nome, telefone, cpf);
+
+
+
+        Apartamento ap = new Apartamento(endereco, numeroApartamento, proprietario, valorAluguel, numeroApartamento, andar, garagem);
+        imoveis.add(ap);
+
+        System.out.println("Apartamento cadastrado com sucesso!");
+
+    }
+
+    private static void listarImoveis() {
+        if (imoveis.isEmpty()) {
+            System.out.println("Nenhum imovel cadastrado!");
+            return;
+        }
+
+        for (Imovel imovel : imoveis) {
+            imovel.exibirInformacoes();
+            System.out.println("------------------------");
+        }
+    }
+
+    private static void alterarStatusAluguel() {
+        listarImoveis();
+
+        System.out.println("Informe o indice do imovel - começando em 0: ");
+        int indice = sc.nextInt();
+
+        if (indice >= 0 && indice < imoveis.size()) {
+            Imovel imovel = imoveis.get(indice);
+            imovel.setAlugado(!imovel.isAlugado());
+            System.out.println("Status do imovel  atualizado!");
+        } else {
+            System.out.println("Indice inválido!");
+        }
+    }
+
+    private static void calcularValorAluguel() {
+        listarImoveis();
+
+        System.out.println("Informe o indice do imóvel: ");
+        int indice = sc.nextInt();
+
+        if (indice >= 0 && indice < imoveis.size()) {
+            Imovel imovel = imoveis.get(indice);
+            System.out.println("Informe o periodo (em meses) para o calculo do aluguel: ");
+            int meses = sc.nextInt();
+
+            System.out.println("Valor total do aluguel" + imovel.calcularAluguel(meses));
+
+        } else {
+            System.out.println("Indice inválido!");
+        }
+    }
+
+    private static void removerAluguel() {
+        listarImoveis();
+
+        System.out.println("Informe o indice do imóvel a remover: ");
+        int indice = sc.nextInt();
+
+        if (indice >=0 && indice < imoveis.size()) {
+            imoveis.remove(indice);
+            System.out.println("Imóvel removido com sucesso!");
+        } else {
+            System.out.println("indice inválido!");
+        }
+    }
+
+
+
+
+}
